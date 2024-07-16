@@ -1,117 +1,60 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import React, { useState } from 'react';
+import { SafeAreaView, ScrollView, View, Image, StyleSheet, Alert } from 'react-native';
+import Block from './Component/Block';
+import Banner from './Component/Banner';
+import Button from './Component/Button';
+import TextInput from './Component/TextInput';
+import Theme from './Component/Theme';
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+const App = () => {
+  const [theme, setTheme] = useState('light');
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
-
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  const toggleTheme = () => {
+    setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
+    <SafeAreaView style={[styles.container, theme === 'dark' && styles.darkTheme]}>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <Image source={require(`./img/img_slie_3.jpg`)} />
+        {/* <Image source={{ uri: 'https://your-logo-url.com/logo.png' }} style={styles.logo} />
+        <Banner source={{ uri: 'https://your-banner-url.com/banner.jpg' }} /> */}
+        <Block title="Thông tin cá nhân">
+          <TextInput placeholder="Họ và tên" />
+          <TextInput placeholder="Email" />
+          <TextInput placeholder="Số điện thoại" />
+        </Block>
+        <Block title="Thông tin khóa học">
+          <TextInput placeholder="Tên khóa học" />
+          <TextInput placeholder="Mã khóa học" />
+        </Block>
+        <Block title="Thông tin liên hệ">
+          <TextInput placeholder="Địa chỉ" />
+          <TextInput placeholder="Ghi chú" />
+        </Block>
+        <Button title="Đăng ký" onPress={() => alert('Đăng ký thành công!')} />
+        <Theme title="Đổi Theme" onPress={toggleTheme} />
       </ScrollView>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  container: {
+    flex: 1,
+    backgroundColor: '#f0f0f0',
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  darkTheme: {
+    backgroundColor: '#333',
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
+  scrollContainer: {
+    padding: 20,
   },
-  highlight: {
-    fontWeight: '700',
+  logo: {
+    width: '100%',
+    height: 100,
+    resizeMode: 'contain',
+    marginBottom: 20,
   },
 });
 
